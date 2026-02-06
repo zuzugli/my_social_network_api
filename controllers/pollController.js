@@ -17,3 +17,22 @@ exports.getAllPolls = async (req, res) => {
     res.status(404).json({ status: 'fail', message: err });
   }
 };
+
+exports.votePoll = async (req, res) => {
+  try {
+    const poll = await Poll.findById(req.params.id);
+    
+    const question = poll.questions.id(req.body.questionId);
+    if (!question) return res.status(404).json({ message: "Question introuvable" });
+
+    const option = question.options.id(req.body.optionId);
+    if (!option) return res.status(404).json({ message: "Option introuvable" });
+
+    option.votes += 1;
+    await poll.save();
+
+    res.status(200).json({ status: 'success', data: { poll } });
+  } catch (err) {
+    res.status(400).json({ status: 'fail', message: err });
+  }
+};

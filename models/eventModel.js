@@ -1,34 +1,30 @@
 const mongoose = require('mongoose');
 
 const eventSchema = new mongoose.Schema({
-  nom: { type: String, required: [true, 'Nom requis'], trim: true },
-  description: { type: String, trim: true },
-  dateDebut: { type: Date, required: [true, 'Date début requise'] },
-  dateFin: { type: Date, required: [true, 'Date fin requise'] },
-  lieu: { type: String, required: [true, 'Lieu requis'] },
-  photoCouverture: { type: String, default: 'default.jpg' },
+  nom: { type: String, required: [true, 'Un événement doit avoir un nom'] },
+  description: String,
+  dateDebut: { type: Date, required: true },
+  dateFin: { type: Date, required: true },
+  lieu: String,
   prive: { type: Boolean, default: false },
-  organisateurs: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  organisateurs: [{ type: mongoose.Schema.ObjectId, ref: 'User' }], // Tableau d'organisateurs
   participants: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  shoppingList: [
-    {
-      objet: { type: String, required: true },
-      quantite: { type: Number, default: 1 }, 
-      responsable: { 
-        type: mongoose.Schema.ObjectId, 
-        ref: 'User'
-      }
-    }
-  ],
-  createdAt: { type: Date, default: Date.now }
-});
+  
+  shoppingList: [{
+    objet: { type: String, required: true },
+    quantite: { type: Number, default: 1 },
+    heureArrivee: String,
+    apporteur: { type: mongoose.Schema.ObjectId, ref: 'User' }
+  }],
 
-eventSchema.pre('validate', function(next) {
-  if (this.dateFin < this.dateDebut) {
-    next(new Error('La date de fin doit être après le début'));
-  } else {
-    next();
-  }
+  ticketTypes: [{
+    nom: String,     
+    prix: Number,   
+    quantiteTotale: Number, 
+    quantiteVendue: { type: Number, default: 0 } 
+  }],
+
+  createdAt: { type: Date, default: Date.now }
 });
 
 const Event = mongoose.model('Event', eventSchema);

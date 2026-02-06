@@ -6,14 +6,13 @@ const ticketSchema = new mongoose.Schema({
     ref: 'Event',
     required: true
   },
-  typeBillet: {
-    nom: { type: String, required: true },
-    prix: Number
-  },
+  typeBilletNom: { type: String, required: true },
+  prixPaye: Number,
+  
   acheteur: {
-    nom: String,
-    prenom: String,
-    adresse: String,
+    nom: { type: String, required: true },
+    prenom: { type: String, required: true },
+    adresse: { type: String, required: true },
     dateAchat: { type: Date, default: Date.now }
   }
 });
