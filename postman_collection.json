@@ -1,0 +1,419 @@
+{
+  "info": {
+    "name": "My Social Network API (Folders)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "http://localhost:3000/api/users/signup",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Gliniak\",\n  \"prenom\": \"Zuzanna\",\n  \"email\": \"zuzanna.gliniak@mail.com\",\n  \"password\": \"motdepasse\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "http://localhost:3000/api/users/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"zuzanna.gliniak@mail.com\",\n  \"password\": \"motdepasse\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Create Event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/events",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Soirée nouvel an\",\n  \"description\": \"Soirée pour fêter le nouvel an\",\n  \"dateDebut\": \"2026-02-10T18:00:00.000Z\",\n  \"dateFin\": \"2026-02-10T23:00:00.000Z\",\n  \"lieu\": \"Paris\",\n  \"prive\": false\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Event (Group)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/events",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Event du groupe\",\n  \"description\": \"Event li? ? un groupe\",\n  \"dateDebut\": \"2026-02-10T18:00:00.000Z\",\n  \"dateFin\": \"2026-02-10T23:00:00.000Z\",\n  \"lieu\": \"Paris\",\n  \"prive\": false,\n  \"groupId\": \"<GROUP_ID>\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Events",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/events"
+          }
+        },
+        {
+          "name": "Add to Shopping List",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/events/<EVENT_ID>/shoppingList",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"objet\": \"coca\",\n  \"quantite\": 3,\n  \"heureArrivee\": \"2026-02-10T20:00:00.000Z\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Groups",
+      "item": [
+        {
+          "name": "Create Group",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/groups",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Groupe API\",\n  \"description\": \"Groupe de partage d'API\",\n  \"type\": \"public\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Groups",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/groups"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Threads",
+      "item": [
+        {
+          "name": "Create Thread (Group)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/threads",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titre\": \"Discussion groupe\",\n  \"groupId\": \"<GROUP_ID>\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Thread (Event)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/threads",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titre\": \"Discussion event\",\n  \"eventId\": \"<EVENT_ID>\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Post Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/threads/<THREAD_ID>/messages",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contenu\": \"coucou\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Reply to Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/threads/<THREAD_ID>/messages/<MESSAGE_ID>/replies",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contenu\": \"réponse\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Thread",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/threads/<THREAD_ID>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Albums",
+      "item": [
+        {
+          "name": "Create Album",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/albums",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titre\": \"Album soirée nouvel an\",\n  \"evenement\": \"<EVENT_ID>\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Photo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/albums/<ALBUM_ID>/photos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"https://example.com/photo.jpg\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Polls",
+      "item": [
+        {
+          "name": "Create Poll",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/polls",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventId\": \"<EVENT_ID>\",\n  \"titre\": \"Sondage repas\",\n  \"questions\": [\n    {\n      \"questionText\": \"Que manger ?\",\n      \"options\": [\n        { \"text\": \"Pizza\" },\n        { \"text\": \"Pâtes\" }\n      ]\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Vote Poll",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/polls/<POLL_ID>/vote",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"questionId\": \"<QUESTION_ID>\",\n  \"optionId\": \"<OPTION_ID>\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Polls",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/polls"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tickets",
+      "item": [
+        {
+          "name": "Create Ticket Type",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer <TOKEN>"
+              }
+            ],
+            "url": "http://localhost:3000/api/tickets/types",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventId\": \"<EVENT_ID>\",\n  \"nom\": \"Standard\",\n  \"prix\": 10,\n  \"quantite\": 50\n}"
+            }
+          }
+        },
+        {
+          "name": "Buy Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "http://localhost:3000/api/tickets/buy",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventId\": \"<EVENT_ID>\",\n  \"typeNom\": \"Standard\",\n  \"nom\": \"Dupont\",\n  \"prenom\": \"Jean\",\n  \"adresse\": \"1 rue de Paris\"\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
