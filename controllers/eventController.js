@@ -3,19 +3,22 @@ const Group = require('../models/groupModel');
 
 exports.createEvent = async (req, res) => {
   try {
-    let participantsInitiaux = [req.user._id];
+    let participants = [req.user._id];
 
-    if (req.body.groupId) {
-      const group = await Group.findById(req.body.groupId);
+    const groupId = req.body.groupId || req.body.groupe;
+    if (groupId) {
+      const group = await Group.findById(groupId);
       if (group) {
-        participantsInitiaux = [...new Set([...participantsInitiaux, ...group.membres])];
+        const membresIds = group.membres.map(m => m.toString());
+        participants = [...new Set([...participants, ...membresIds])];
       }
     }
 
     const newEvent = await Event.create({
       ...req.body,
-      organisateurs: [req.user._id], 
-      participants: participantsInitiaux
+      groupId: groupId || req.body.groupId,
+      organisateurs: [req.user._id],
+      participants: participants
     });
 
     res.status(201).json({ status: 'success', data: { event: newEvent } });
@@ -25,39 +28,27 @@ exports.createEvent = async (req, res) => {
 };
 
 exports.getAllEvents = async (req, res) => {
-  try {
-    const events = await Event.find();
-    res.status(200).json({ status: 'success', results: events.length, data: { events } });
-  } catch (err) {
-    res.status(404).json({ status: 'fail', message: err });
-  }
+  const events = await Event.find();
+  res.status(200).json({ status: 'success', results: events.length, data: { events } });
 };
 
 exports.addToShoppingList = async (req, res) => {
-  try {
-    const event = await Event.findById(req.params.id);
-    
-    const existeDeja = event.shoppingList.some(
-      item => item.objet.toLowerCase() === req.body.objet.toLowerCase()
-    );
+  const event = await Event.findById(req.params.id);
+  if (!event) return res.status(404).json({ message: '??v??nement introuvable' });
 
-    if (existeDeja) {
-      return res.status(400).json({ 
-        status: 'fail', 
-        message: 'Cet objet est déjà dans la liste ! Chaque objet doit être unique.' 
-      });
-    }
-
-    event.shoppingList.push({
-      objet: req.body.objet,
-      quantite: req.body.quantite,
-      heureArrivee: req.body.heureArrivee,
-      apporteur: req.user._id
-    });
-
-    await event.save();
-    res.status(200).json({ status: 'success', data: { event } });
-  } catch (err) {
-    res.status(400).json({ status: 'fail', message: err });
+  if (!req.body.objet) {
+    return res.status(400).json({ message: 'Objet requis' });
   }
+
+  const existe = event.shoppingList.some(i => i.objet.toLowerCase() === req.body.objet.toLowerCase());
+  if (existe) return res.status(400).json({ message: 'Objet d??j?? pris !' });
+
+  event.shoppingList.push({
+    objet: req.body.objet,
+    quantite: req.body.quantite || 1,
+    heureArrivee: req.body.heureArrivee,
+    apporteur: req.user._id
+  });
+  await event.save();
+  res.status(200).json({ status: 'success', data: event });
 };

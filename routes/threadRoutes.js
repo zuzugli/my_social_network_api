@@ -8,14 +8,18 @@ router.use(authController.protect);
 
 router
   .route('/')
-  .post(threadController.createThread); 
+  .post(threadController.createThread);
 
 router
   .route('/:id')
-  .get(threadController.getThread);   
+  .get(threadController.getThread); 
 
 router
   .route('/:id/messages')
-  .post(threadController.addMessage); 
+  .post(threadController.postMessage);
+
+router
+  .route('/:threadId/messages/:messageId/reply')
+  .post(threadController.replyToMessage);
 
 module.exports = router;

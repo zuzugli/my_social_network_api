@@ -10,8 +10,12 @@ const pollSchema = new mongoose.Schema({
   questions: [{
     questionText: { type: String, required: true },
     options: [{
-      text: String,
-      votes: { type: Number, default: 0 }
+      text: String
+    }],
+    reponses: [{
+      userId: { type: mongoose.Schema.ObjectId, ref: 'User' },
+      optionId: { type: mongoose.Schema.ObjectId },
+      choix: String
     }]
   }],
   createdAt: { type: Date, default: Date.now }

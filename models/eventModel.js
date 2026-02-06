@@ -9,6 +9,7 @@ const eventSchema = new mongoose.Schema({
   prive: { type: Boolean, default: false },
   organisateurs: [{ type: mongoose.Schema.ObjectId, ref: 'User' }], // Tableau d'organisateurs
   participants: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  groupId: { type: mongoose.Schema.ObjectId, ref: 'Group' },
   
   shoppingList: [{
     objet: { type: String, required: true },
