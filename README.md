@@ -10,15 +10,15 @@ npm install
 
 ## Configuration (.env)
 
-1) Copier `.env.example` vers `.env`
+1) Copier `.env.example` vers un nouveau fichier `.env`
 2) Remplir les variables avec des valeurs réelles
 
 Exemple :
 
 ```
 PORT=3000
-DATABASE_URI=mongodb+srv://<user>:<password>@<cluster>/<db>
-JWT_SECRET=cle_tres_longue_et_securisee
+DATABASE_URI=<entrer l'url de la bdd>
+JWT_SECRET=<entrer le mot de passe>
 JWT_EXPIRES_IN=90d
 ```
 
